@@ -29,6 +29,9 @@ jobs:
           php-version: ${{ matrix.php }}
           extensions: ctype, curl, dom, fileinfo, filter, hash, mbstring, openssl, pcre, pdo, session, tokenizer, xml
 
+      - name: Run npm install
+        run: npm install # probably requires a nodejs setup step
+
       - name: Run composer install
         run: composer install -n --prefer-dist
 
