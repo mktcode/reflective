@@ -1,0 +1,17 @@
+name: Deploy
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set deployment key
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.DEPLOYMENT_HOST }} >> ~/.ssh/known_hosts
+          echo "${{ secrets.DEPLOYMENT_SSH_KEY }}" > ~/.ssh/key && chmod 600 ~/.ssh/key
+
+      - name: Deploy
+        run: |
+          ssh -i ~/.ssh/key mktcode@${{ secrets.DEPLOYMENT_HOST }} << 'cd ${{ secrets.DEPLOYMENT_PATH }} && sh update.sh'
