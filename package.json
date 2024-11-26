@@ -3,7 +3,8 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
+        "dev": "vite",
+        "db:tunnel": "ssh -i ~/.ssh/uberspace-mktcode mktcode@alnilam.uberspace.de -N -L 3306:127.0.0.1:3306"
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.2",
