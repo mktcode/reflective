@@ -13,6 +13,7 @@
         "livewire/volt": "^1.0"
     },
     "require-dev": {
+        "behat/behat": "^3.16",
         "fakerphp/faker": "^1.23",
         "laravel/breeze": "^2.2",
         "laravel/pail": "^1.1",
