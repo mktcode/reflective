@@ -3,8 +3,6 @@
 use App\Models\User;
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
 use Tests\TestCase;
 
 /**
@@ -12,6 +10,9 @@ use Tests\TestCase;
  */
 class ProfileContext extends TestCase implements Context
 {
+    private $user;
+    private $response;
+
     /**
      * Initializes context.
      *
@@ -21,6 +22,7 @@ class ProfileContext extends TestCase implements Context
      */
     public function __construct()
     {
+        putenv('APP_ENV=testing');
         $this->setUp();
         $this->withoutExceptionHandling();
     }
@@ -31,6 +33,8 @@ class ProfileContext extends TestCase implements Context
     public function before()
     {
         $this->artisan('migrate:fresh');
+        $this->artisan('db:seed');
+        $this->user = User::factory()->create();
     }
 
     /**
@@ -38,7 +42,7 @@ class ProfileContext extends TestCase implements Context
      */
     public function iAmLoggedIn(): void
     {
-        $this->actingAs(User::factory()->create());
+        $this->actingAs($this->user);
     }
 
     /**
@@ -46,7 +50,7 @@ class ProfileContext extends TestCase implements Context
      */
     public function iVisitTheProfilePage(): void
     {
-        throw new PendingException();
+        $this->response = $this->get('/profile');
     }
 
     /**
@@ -54,7 +58,9 @@ class ProfileContext extends TestCase implements Context
      */
     public function iShouldSeeTheUpdateProfileInformationForm(): void
     {
-        throw new PendingException();
+        $this->response
+            ->assertOk()
+            ->assertSeeVolt('profile.update-profile-information-form');
     }
 
     /**
@@ -62,7 +68,9 @@ class ProfileContext extends TestCase implements Context
      */
     public function iShouldSeeTheUpdatePasswordForm(): void
     {
-        throw new PendingException();
+        $this->response
+            ->assertOk()
+            ->assertSeeVolt('profile.update-password-form');
     }
 
     /**
@@ -70,7 +78,9 @@ class ProfileContext extends TestCase implements Context
      */
     public function iShouldSeeTheDeleteUserForm(): void
     {
-        throw new PendingException();
+        $this->response
+            ->assertOk()
+            ->assertSeeVolt('profile.delete-user-form');
     }
 
     /**
