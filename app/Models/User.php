@@ -9,12 +9,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Cashier\Billable;
+use SimonHamp\LaravelStripeConnect\Traits\Payable;
 use function Illuminate\Events\queueable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable, Billable;
+    use HasFactory, Notifiable, Billable, Payable;
 
     /**
      * The attributes that are mass assignable.

@@ -32,6 +32,13 @@ new class extends Component {
                     </div>
                 </div>
                 <p>{{ $post->body }}</p>
+                <div class="mt-4">
+                    <x-primary-button>
+                        <a href="{{ route('charge-checkout', $post) }}">
+                            {{ __('Buy') }}
+                        </a>
+                    </x-primary-button>
+                </div>
             </div>
         </div>
     @endforeach
